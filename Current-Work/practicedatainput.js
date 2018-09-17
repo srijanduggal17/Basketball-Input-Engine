@@ -1,7 +1,7 @@
 //Window.innerHeight is 647
 
 //File and setup
-var fs = nodeRequire('file-system');
+var fs = nodeRequire('fs');
 var maindata = JSON.parse(fs.readFileSync("Data Storage/maindata.JSON", 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
