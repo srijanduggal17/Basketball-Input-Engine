@@ -2,7 +2,7 @@
 
 //File and setup
 var fs = nodeRequire('fs');
-var maindata = JSON.parse(fs.readFileSync("Data Storage/maindata.JSON", 'utf8'));
+// var maindata = JSON.parse(fs.readFileSync("Data Storage/maindata.JSON", 'utf8'));
 const outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
@@ -10,21 +10,13 @@ var playerdropdowndiv = document.getElementById("playerdropdown");
 
 //Court SVG
 var court = document.getElementById("courtgroup");
-court.setAttribute('transform','scale(' + .808124*window.innerHeight/522.85602 + ',' + .758714*window.innerHeight/490.888 + ')');
+const courtscale = 0.00154559566895681913;
+court.setAttribute('transform','scale(' + courtscale*window.innerHeight + ',' + courtscale*window.innerHeight + ')');
 var courtsvg = document.getElementById("court");
-courtsvg.setAttribute('width',''+.808124*window.innerHeight+'');
-courtsvg.setAttribute('height',''+.758714*window.innerHeight+'');
-
-//Scaling Variables
-var topspace = 20;
-var circleradius = .0247*window.innerHeight;
-var hoopx = .4*window.innerHeight;
-var hoopy = .0866*window.innerHeight;
-
-jss.set('.circleforplayers', {
-	'width': '' + .0495*window.innerHeight + 'px',
-	'height': '' + .0495*window.innerHeight + 'px',
-});
+const courtwidth = .808124*window.innerHeight;
+const courtheight = .758714*window.innerHeight
+courtsvg.setAttribute('width', `${courtwidth}`);
+courtsvg.setAttribute('height',`${courtheight}`);
 
 //Hoop SVG
 var hoopgroup = document.getElementById("hoopgroup");
@@ -32,6 +24,19 @@ hoopgroup.setAttribute('transform','scale(' + .808124*window.innerHeight/522.856
 var hoopsvg = document.getElementById('hoopsvg');
 hoopsvg.style.left = .39*window.innerHeight + 'px';
 hoopsvg.style.top = topspace + .073*window.innerHeight + 'px';
+
+// //Scaling Variables
+// var topspace = 20;
+// var circleradius = .0247*window.innerHeight;
+// var hoopx = .4*window.innerHeight;
+// var hoopy = .0866*window.innerHeight;
+
+// jss.set('.circleforplayers', {
+// 	'width': '' + .0495*window.innerHeight + 'px',
+// 	'height': '' + .0495*window.innerHeight + 'px',
+// });
+
+
 
 
 // //Hoop Hover properties
