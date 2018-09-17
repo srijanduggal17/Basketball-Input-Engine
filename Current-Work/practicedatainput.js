@@ -27,16 +27,6 @@ hoop.setAttribute('cy', `${hoopTopGap*courtheight}`);
 hoop.setAttribute('r', `${hoopRadius*window.innerHeight}`);
 
 console.log(window.innerHeight);
-// hoopgroup.setAttribute('transform','scale(' + .808124*window.innerHeight/522.85602 + ',' + .758714*window.innerHeight/490.888 + ')');
-// var hoopsvg = document.getElementById('hoopsvg');
-// hoopsvg.style.left = .39*window.innerHeight + 'px';
-// hoopsvg.style.top = topspace + .073*window.innerHeight + 'px';
-
-// //Scaling Variables
-// var topspace = 20;
-// var circleradius = .0247*window.innerHeight;
-// var hoopx = .4*window.innerHeight;
-// var hoopy = .0866*window.innerHeight;
 
 // jss.set('.circleforplayers', {
 // 	'width': '' + .0495*window.innerHeight + 'px',
