@@ -5,7 +5,6 @@ let win
 
 //These two lines load the appstate file. This is used to determine whether the app has been opened or not in order to determine the html sequence.
 var fs = require('file-system');
-var appstate = JSON.parse(fs.readFileSync("Data Storage/appstate.JSON", 'utf8'));
 
 //The rest of this code is default and comes with electron. Idk what most of it means but there are a few important lines.
 function createWindow(){
@@ -14,29 +13,12 @@ function createWindow(){
 //The line below tells the window to maximize on startup	
 	win.maximize();
 
-/*The block below is for determining the html sequence. 
-If it is the user's first time opening the app, it will load the welcome page and then ask to create a team,
-input staff and players, and input practices/games. 
-If it is not the first time, it will load the home page.
-*/
-	if (appstate["State"] === "First Time") {
-		win.loadURL(`file://${__dirname}/index.html`);
-		appstate["State"] = "Not First Time";
-		
-		fs.writeFile("Data Storage/appstate.JSON", JSON.stringify(appstate, null, "\t"), function (err) {
-			if (err != undefined) {
-				alert(err.message,"State Save error")
-			}
-		});
-	}
-	else {
-		win.loadURL(`file://${__dirname}/home.html`);
-	}
-
+	win.loadURL(`file://${__dirname}/drillinput.html`);
 
 	win.on('closed', () => {
 		win=null
 	});
+    win.webContents.openDevTools()
 }
 
 app.on('ready', createWindow)
