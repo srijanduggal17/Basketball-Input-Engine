@@ -1,12 +1,6 @@
-//Window.innerHeight is 647
-
 //File and setup
 var fs = nodeRequire('fs');
-<<<<<<< HEAD
 var roster = JSON.parse(fs.readFileSync("roster.JSON", 'utf8'));
-=======
-// var maindata = JSON.parse(fs.readFileSync("Data Storage/maindata.JSON", 'utf8'));
->>>>>>> a82cc5dceca83d099f4b64df8cf046c685790667
 const outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
