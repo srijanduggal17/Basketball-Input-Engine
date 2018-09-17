@@ -2,10 +2,29 @@
 
 //File and setup
 var fs = nodeRequire('fs');
+<<<<<<< HEAD
+var roster = JSON.parse(fs.readFileSync("roster.JSON", 'utf8'));
+=======
 // var maindata = JSON.parse(fs.readFileSync("Data Storage/maindata.JSON", 'utf8'));
+>>>>>>> a82cc5dceca83d099f4b64df8cf046c685790667
 const outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
+
+for (var i = 0; i < roster["Roster"].length; i++) {
+	var playername = roster["Roster"][i]["Name"].toLowerCase().replace(" ","");
+				
+	var newplayerindropdown = document.createElement("a");
+	newplayerindropdown.innerHTML = roster["Roster"][i]["Name"];
+	newplayerindropdown.setAttribute('id','' + playername + '');
+	newplayerindropdown.setAttribute('onclick',"choosePlayer('" + maindata["Player"][i]["Name"] + "')");				playerdropdowndiv.appendChild(newplayerindropdown);
+
+	var newplayerdata = {
+		"Player" : maindata["Player"][i]["Name"],					
+		"ScrimmagePressure" : [],
+		"DrillPressure" : []
+	}
+}
 
 
 //Court SVG
