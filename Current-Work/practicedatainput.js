@@ -5,21 +5,16 @@ const outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
 
+// Load roster from roster.json
 for (var i = 0; i < roster["Roster"].length; i++) {
 	var playername = roster["Roster"][i]["Name"].toLowerCase().replace(" ","");
-				
+	
 	var newplayerindropdown = document.createElement("a");
 	newplayerindropdown.innerHTML = roster["Roster"][i]["Name"];
 	newplayerindropdown.setAttribute('id','' + playername + '');
-	newplayerindropdown.setAttribute('onclick',"choosePlayer('" + maindata["Player"][i]["Name"] + "')");				playerdropdowndiv.appendChild(newplayerindropdown);
-
-	var newplayerdata = {
-		"Player" : maindata["Player"][i]["Name"],					
-		"ScrimmagePressure" : [],
-		"DrillPressure" : []
-	}
+	newplayerindropdown.setAttribute('onclick',"choosePlayer('" + roster["Roster"][i]["Name"] + "')");				
+	playerdropdowndiv.appendChild(newplayerindropdown);
 }
-
 
 //Court SVG
 var court = document.getElementById("courtgroup");
