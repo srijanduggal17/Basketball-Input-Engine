@@ -14,12 +14,6 @@ for (var i = 0; i < roster["Roster"].length; i++) {
 	newplayerindropdown.setAttribute('id','' + playername + '');
 	newplayerindropdown.setAttribute('onclick',"choosePlayer('" + roster["Roster"][i]["Name"] + "')");				
 	playerdropdowndiv.appendChild(newplayerindropdown);
-
-	var newplayerdata = {
-		"Player" : roster["Roster"][i]["Name"],					
-		"ScrimmagePressure" : [],
-		"DrillPressure" : []
-	}
 }
 
 //Court SVG
