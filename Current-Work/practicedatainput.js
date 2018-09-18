@@ -30,8 +30,10 @@ courtsvg.setAttribute('height',`${courtheight}`);
 var hoop = document.getElementById("hoop");
 const hoopTopGap = .115;
 const hoopRadius = 0.01236476043276661515;
-hoop.setAttribute('cx', `${courtwidth/2}`);
-hoop.setAttribute('cy', `${hoopTopGap*courtheight}`);
+const hoopx = courtwidth/2;
+const hoopy = hoopTopGap*courtheight
+hoop.setAttribute('cx', `${hoopx}`);
+hoop.setAttribute('cy', `${hoopy}`);
 hoop.setAttribute('r', `${hoopRadius*window.innerHeight}`);
 
 function colorHoop() {
@@ -205,10 +207,8 @@ function inputData() {
 	// }
 }
 
-// jss.set('.circleforplayers', {
-// 	'width': '' + .0495*window.innerHeight + 'px',
-// 	'height': '' + .0495*window.innerHeight + 'px',
-// });
+var topspace = 20;
+
 
 jss.set('.circleforplayers', {
 	'width': '' + .0495*window.innerHeight + 'px',
@@ -235,12 +235,12 @@ d3.select("#shots").attr('width',.808124*window.innerHeight)
 //Buttons and Divs
 var checkbutton = document.getElementById('checkbutton');
 var xbutton = document.getElementById('xbutton');
-// var notrebbutton = document.getElementById('notreb');
-// var opponentbutton = document.getElementById('opponent');
-// var oobourbutton = document.getElementById('oobour');
-// var ooboppbutton = document.getElementById('oobopp')
-// var pagecontentdiv = document.getElementById('pagecontent');
-// var actionbuttons = document.getElementById('actionbuttons');
+var notrebbutton = document.getElementById('notreb');
+var opponentbutton = document.getElementById('opponent');
+var oobourbutton = document.getElementById('oobour');
+var ooboppbutton = document.getElementById('oobopp')
+var pagecontentdiv = document.getElementById('pagecontent');
+var actionbuttons = document.getElementById('actionbuttons');
 
 //Basic Variables
 var newevent = {};
@@ -267,13 +267,14 @@ var currentplayer;
 // var passoccurred = 0;
 // var dribbleoccurred = 0;
 
-// var currentcircle = 0;
+var currentcircle = 0;
 // var currentpass = 0;
 // var currentdribble = 0;
-// var currentshot = 0;
+var currentshot = 0;
 // var currentrebound = 0;
 
-var circlesvgwidth = .049459*window.innerHeight
+var circlesvgwidth = .049459*window.innerHeight;
+var circleradius = .0247*window.innerHeight;
 
 function choosePlayer(nam) {
 	playerdropdowndiv.style.display = "none";
