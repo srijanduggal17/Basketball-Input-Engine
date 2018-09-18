@@ -46,6 +46,7 @@ const hoopgroup = document.getElementById('hoopgroup');
 hoopgroup.setAttribute('onmouseover', 'colorHoop()');
 hoopgroup.setAttribute('onmouseout', 'uncolorHoop()');
 
+
 function inputData() {
 	var dt = new Date()
 
@@ -209,10 +210,15 @@ function inputData() {
 // 	'height': '' + .0495*window.innerHeight + 'px',
 // });
 
+jss.set('.circleforplayers', {
+	'width': '' + .0495*window.innerHeight + 'px',
+	'height': '' + .0495*window.innerHeight + 'px',
+});
 
-// //Shot Lines
-// d3.select("#shots").attr('width',.808124*window.innerHeight)
-// 					.attr('height',.758714*window.innerHeight);
+
+//Shot Lines
+d3.select("#shots").attr('width',.808124*window.innerHeight)
+					.attr('height',.758714*window.innerHeight);
 
 // //Pass Lines
 // d3.select("#passes").attr('width',.808124*window.innerHeight)
@@ -226,11 +232,9 @@ function inputData() {
 // d3.select("#rebounds").attr('width',.808124*window.innerHeight)
 // 					.attr('height',.758714*window.innerHeight);
 
-// var circlesvgwidth = .049459*window.innerHeight
-
-// //Buttons and Divs
-// var checkbutton = document.getElementById('checkbutton');
-// var xbutton = document.getElementById('xbutton');
+//Buttons and Divs
+var checkbutton = document.getElementById('checkbutton');
+var xbutton = document.getElementById('xbutton');
 // var notrebbutton = document.getElementById('notreb');
 // var opponentbutton = document.getElementById('opponent');
 // var oobourbutton = document.getElementById('oobour');
@@ -238,13 +242,13 @@ function inputData() {
 // var pagecontentdiv = document.getElementById('pagecontent');
 // var actionbuttons = document.getElementById('actionbuttons');
 
-// //Basic Variables
-// var newevent = {};
+//Basic Variables
+var newevent = {};
 // var newevent2 = {};
 
 // var currentsequence = maindata["Practices"][indexofpractice]["Next Sequence"];
 // var currentevent = 0;
-// var currentplayer;
+var currentplayer;
 // var player1;
 
 // var locationtimer = 0;
@@ -269,6 +273,58 @@ function inputData() {
 // var currentshot = 0;
 // var currentrebound = 0;
 
+var circlesvgwidth = .049459*window.innerHeight
+
+function choosePlayer(nam) {
+	playerdropdowndiv.style.display = "none";
+	console.log('drillchoose');
+
+	currentplayer = nam;
+
+	d3.select("#circles").append('svg')
+						.attr('id','circle0')
+						.attr('width',circlesvgwidth)
+						.attr('height',circlesvgwidth)
+						.attr('class','circleforplayers')
+						.style('left',newevent["Location"][0] - circleradius)
+						.style('top',newevent["Location"][1] - circleradius)
+						.style('display','block')
+						.append('circle')
+						.attr('cx',.5*circlesvgwidth)
+						.attr('cy',.5*circlesvgwidth)
+						.attr('r',.0231839*window.innerHeight);
+	d3.select("#circle0").append('text')
+						.attr('x','50%')
+						.attr('y','65%')
+						.attr('text-anchor','middle')
+						.style('stroke-width','0')
+						.style('fill','#000')
+						.style('font-size',.02163833*window.innerHeight)
+						.text(getInitials(currentplayer));
+
+	d3.select("#circles").style('display','block');
+
+	drawShotArrow(newevent["Location"][0],newevent["Location"][1]);
+	checkbutton.setAttribute('onclick','chooseAction("Shot Made")');
+	xbutton.setAttribute('onclick','chooseAction("Shot Missed")');
+
+	shotwasattempted = 1;
+
+	currentcircle += 1;
+}
+
+function getInitials(name) {
+	var currentinitials;
+
+	if (name.includes(" ")) {
+		var x = name.split(" ");
+		var a = x[0].slice(0,1).toUpperCase();
+		var b = x[1].slice(0,1).toUpperCase();
+		currentinitials =  a.concat(b);
+	}
+
+	return currentinitials;
+}
 
 // function inputData() {
 // 	var dt = new Date()
@@ -895,74 +951,74 @@ function inputData() {
 // 	newevent2 = {};
 // }
 
-// function drawShotArrow(xloc,yloc) {
-// 	//all of this is relative to top left corner of court
-// 	var centerx = xloc;
-// 	var centery = yloc - topspace;
+function drawShotArrow(xloc,yloc) {
+	//all of this is relative to top left corner of court
+	var centerx = xloc;
+	var centery = yloc - topspace;
     
-// 	var diffx = hoopx - centerx;
-// 	var diffy = hoopy - centery;
+	var diffx = hoopx - centerx;
+	var diffy = hoopy - centery;
 
-// 	var dist = Math.sqrt(Math.pow(diffx,2) + Math.pow(diffy,2));
+	var dist = Math.sqrt(Math.pow(diffx,2) + Math.pow(diffy,2));
 
-// 	var unitvector = [(diffx/dist),(diffy/dist)];
-// 	var vectortoinitialpoint = [circleradius*unitvector[0],circleradius*unitvector[1]];
+	var unitvector = [(diffx/dist),(diffy/dist)];
+	var vectortoinitialpoint = [circleradius*unitvector[0],circleradius*unitvector[1]];
 
-// 	var x1 = centerx + vectortoinitialpoint[0];
-// 	var y1 = centery + vectortoinitialpoint[1];
-
-
-// 	var headmag = 15;
-// 	var head = [headmag*unitvector[0],headmag*unitvector[1]];
-
-// 	var head1vector = [Math.cos(Math.PI/6)*head[0] - Math.sin(Math.PI/6)*head[1],Math.cos(Math.PI/6)*head[1] + Math.sin(Math.PI/6)*head[0]];
-// 	var head2vector = [Math.cos(11*Math.PI/6)*head[0] - Math.sin(11*Math.PI/6)*head[1],Math.cos(11*Math.PI/6)*head[1] + Math.sin(11*Math.PI/6)*head[0]];
+	var x1 = centerx + vectortoinitialpoint[0];
+	var y1 = centery + vectortoinitialpoint[1];
 
 
-// 	var head1x = hoopx-head1vector[0];
-// 	var head1y = hoopy-head1vector[1];
+	var headmag = 15;
+	var head = [headmag*unitvector[0],headmag*unitvector[1]];
 
-// 	var head2x = hoopx-head2vector[0];
-// 	var head2y = hoopy-head2vector[1];
-
-// 	d3.select("#shots").style('display','block')
-// 						.append('line')
-// 						.attr('id','shot' + currentshot + 'mainline')
-// 						.attr('x1',centerx)
-// 						.attr('y1',centery)
-// 						.attr('x2',hoopx)
-// 						.attr('y2',hoopy);
-
-// 	d3.select("#shots").append('line')
-// 						.attr('id','shot' + currentshot + 'head1line')
-// 						.attr('x1',head1x)
-// 						.attr('y1',head1y)
-// 						.attr('x2',hoopx)
-// 						.attr('y2',hoopy);
-
-// 	d3.select("#shots").append('line')
-// 						.attr('id','shot' + currentshot + 'head2line')
-// 						.attr('x1',head2x)
-// 						.attr('y1',head2y)
-// 						.attr('x2',hoopx)
-// 						.attr('y2',hoopy);
-
-// 	var posleft = hoopx + .5*(centerx - hoopx);
-// 	var postop = hoopy + .5*(centery - hoopy);
+	var head1vector = [Math.cos(Math.PI/6)*head[0] - Math.sin(Math.PI/6)*head[1],Math.cos(Math.PI/6)*head[1] + Math.sin(Math.PI/6)*head[0]];
+	var head2vector = [Math.cos(11*Math.PI/6)*head[0] - Math.sin(11*Math.PI/6)*head[1],Math.cos(11*Math.PI/6)*head[1] + Math.sin(11*Math.PI/6)*head[0]];
 
 
-// 	actionbuttons.style.top = postop + 'px';
-// 	actionbuttons.style.left = posleft + 'px';
-// 	actionbuttons.style.display = "block";
-// 	ooboppbutton.style.display = "none";
-// 	oobourbutton.style.display = "none";
-// 	opponentbutton.style.display = "none";
-// 	notrebbutton.style.display = "none";
-// 	checkbutton.style.display = "inline";
-// 	xbutton.style.display = "inline";
+	var head1x = hoopx-head1vector[0];
+	var head1y = hoopy-head1vector[1];
 
-// 	currentshot += 1;
-// }
+	var head2x = hoopx-head2vector[0];
+	var head2y = hoopy-head2vector[1];
+
+	d3.select("#shots").style('display','block')
+						.append('line')
+						.attr('id','shot' + currentshot + 'mainline')
+						.attr('x1',centerx)
+						.attr('y1',centery)
+						.attr('x2',hoopx)
+						.attr('y2',hoopy);
+
+	d3.select("#shots").append('line')
+						.attr('id','shot' + currentshot + 'head1line')
+						.attr('x1',head1x)
+						.attr('y1',head1y)
+						.attr('x2',hoopx)
+						.attr('y2',hoopy);
+
+	d3.select("#shots").append('line')
+						.attr('id','shot' + currentshot + 'head2line')
+						.attr('x1',head2x)
+						.attr('y1',head2y)
+						.attr('x2',hoopx)
+						.attr('y2',hoopy);
+
+	var posleft = hoopx + .5*(centerx - hoopx);
+	var postop = hoopy + .5*(centery - hoopy);
+
+
+	actionbuttons.style.top = postop + 'px';
+	actionbuttons.style.left = posleft + 'px';
+	actionbuttons.style.display = "block";
+	ooboppbutton.style.display = "none";
+	oobourbutton.style.display = "none";
+	opponentbutton.style.display = "none";
+	notrebbutton.style.display = "none";
+	checkbutton.style.display = "inline";
+	xbutton.style.display = "inline";
+
+	currentshot += 1;
+}
 
 // function drawPassArrow(xi,yi,xf,yf) {
 // 	var diffx = xf - xi;
@@ -1077,19 +1133,6 @@ function inputData() {
 // 	var postop = hoopy + .5*(centery - hoopy);
 
 // 	currentrebound += 1;
-// }
-
-// function getInitials(name) {
-// 	var currentinitials;
-
-// 	if (name.includes(" ")) {
-// 		var x = name.split(" ");
-// 		var a = x[0].slice(0,1).toUpperCase();
-// 		var b = x[1].slice(0,1).toUpperCase();
-// 		currentinitials =  a.concat(b);
-// 	}
-
-// 	return currentinitials;
 // }
 
 // function drawNextCircle(player,x,y) {

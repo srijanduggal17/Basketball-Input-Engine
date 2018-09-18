@@ -3,8 +3,15 @@
 	stroke:#000000;
 }
 
-.mdl-layout__drawer-button i {
-    color: #000;
+#hoop {
+    fill: none;
+    stroke: #000;
+    z-index: 5;
+}
+
+#hoopgroup {
+    position: absolute;
+    z-index: 10;
 }
 
 #playerdropdown {
@@ -61,17 +68,6 @@
     position: absolute;
     display: none;
     z-index: 5;
-}
-
-#hoop {
-    fill: none;
-    stroke: #000;
-    z-index: 5;
-}
-
-#hoopsvg {
-    position: absolute;
-    z-index: 10;
 }
 
 #notreb {
