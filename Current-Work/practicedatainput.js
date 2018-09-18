@@ -34,28 +34,23 @@ hoop.setAttribute('cx', `${courtwidth/2}`);
 hoop.setAttribute('cy', `${hoopTopGap*courtheight}`);
 hoop.setAttribute('r', `${hoopRadius*window.innerHeight}`);
 
-console.log(window.innerHeight);
+function colorHoop() {
+	hoop.style.fill = "#FF6347";
+}
+
+function uncolorHoop() {
+	hoop.style.fill = "none";
+}
+
+const hoopgroup = document.getElementById('hoopgroup');
+hoopgroup.setAttribute('onmouseover', 'colorHoop()');
+hoopgroup.setAttribute('onmouseout', 'uncolorHoop()');
 
 // jss.set('.circleforplayers', {
 // 	'width': '' + .0495*window.innerHeight + 'px',
 // 	'height': '' + .0495*window.innerHeight + 'px',
 // });
 
-
-
-
-// //Hoop Hover properties
-// hoopsvg.setAttribute('onmouseout','uncolorHoop()');
-
-// var hoop = document.getElementById('hoop');
-
-// function colorHoop() {
-// 	hoop.style.fill = "#FF6347";
-// }
-
-// function uncolorHoop() {
-// 	hoop.style.fill = "none";
-// }
 
 // //Shot Lines
 // d3.select("#shots").attr('width',.808124*window.innerHeight)
