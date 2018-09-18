@@ -46,6 +46,164 @@ const hoopgroup = document.getElementById('hoopgroup');
 hoopgroup.setAttribute('onmouseover', 'colorHoop()');
 hoopgroup.setAttribute('onmouseout', 'uncolorHoop()');
 
+function inputData() {
+	var dt = new Date()
+
+	//if (shotwasattempted === 0) {
+		newevent = {
+			"Action" : "",
+			"Location" : [event.pageX,event.pageY],
+			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()]
+		};
+
+		playerdropdowndiv.style.display = "block";
+		playerdropdowndiv.style.left = event.pageX + 'px';
+		playerdropdowndiv.style.top = event.pageY + 'px';
+	//} 
+	// else {
+	// 	if (passwasattempted !== 1 && shotwasattempted !== 1) {
+	// 		playerdropdowndiv.style.display = "block";
+	// 		playerdropdowndiv.style.left = event.pageX + 'px';
+	// 		playerdropdowndiv.style.top = event.pageY + 'px';
+	// 	}
+
+	// 	if (passoccurred === 0 && dribbleoccurred === 0 && (abletopass + abletoshoot + abletodribble + abletorebound) === 0 && passwasattempted === 0) {
+	// 		newevent = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent,
+	// 			"Location" : [event.pageX,event.pageY],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()],
+	// 			"Origin" : "Play Start"
+	// 		};
+	// 	}
+
+	// 	else if (abletorebound === 1) {
+	// 		notrebbutton.style.display = "none";
+
+	// 		newevent["Rebounded"] = "Yes";
+	// 		newevent["Rebound Location"] = [event.pageX,event.pageY];
+	// 		maindata["Practices"][indexofpractice]["Data"][practicingarray.indexOf(currentplayer)]["ScrimmagePressure"].push(newevent);	
+
+	// 		drawReboundArrow(event.pageX,event.pageY);
+
+	// 		abletorebound = 0;
+	// 		currentevent = 0;
+	// 		currentsequence += 1;
+
+	// 		newevent = {};
+	// 		newevent = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent,
+	// 			"Location" : [event.pageX,event.pageY],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()],
+	// 			"Origin" : "Rebound"
+	// 		}
+
+	// 		currentplayer = null;
+	// 	}
+
+	// 	else if (abletopass === 1 && passoccurred === 0 && passwasattempted === 0 && dribbleoccurred === 0) {
+	// 		passwasattempted = 1;
+
+	// 		newevent2 = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent + "-b",
+	// 			"Location" : [event.pageX,event.pageY],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()],
+	// 			"From" : currentplayer
+	// 		}
+
+	// 		newevent["Event"] += "-a";
+
+	// 		abletopass = 0;
+	// 		abletoshoot = 0;
+	// 		abletodribble = 0;
+
+	// 		hoopsvg.setAttribute('onmouseover','');
+
+
+	// 		var currentplayerid = currentplayer.toLowerCase().replace(" ","");
+	// 		document.getElementById(''+currentplayerid+'').style.display = "none";
+	// 	}
+
+	// 	else if (abletopass === 1 && passoccurred === 0 && passwasattempted === 0 && dribbleoccurred === 1) {
+	// 		passwasattempted = 1;
+
+	// 		abletoshoot = 0;
+	// 		abletopass = 0;
+	// 		abletodribble = 0;
+			
+	// 		hoopsvg.setAttribute('onmouseover','');
+
+	// 		dribbleoccurred = 0;
+	// 		maindata["Practices"][indexofpractice]["Data"][practicingarray.indexOf(currentplayer)]["ScrimmagePressure"].push(newevent);
+
+	// 		var lastlocation = newevent["Location"][newevent["Location"].length - 1];
+
+	// 		newevent = {};
+	// 		newevent = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent + "-a",
+	// 			"Location" : [lastlocation[0],lastlocation[1]],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()]
+	// 		};
+
+	// 		newevent2 = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent + "-b",
+	// 			"Location" : [event.pageX,event.pageY],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()],
+	// 			"From" : currentplayer
+	// 		}
+
+	// 		var currentplayerid = currentplayer.toLowerCase().replace(" ","");
+	// 		document.getElementById(''+currentplayerid+'').style.display = "none";
+	// 	}
+
+	// 	else if (abletopass === 1 && passoccurred === 1 && passwasattempted === 0 && dribbleoccurred === 0) {
+	// 		passoccurred = 0;
+	// 		passwasattempted = 1;
+
+	// 		abletopass = 0;
+	// 		abletodribble = 0;
+	// 		abletoshoot = 0;
+
+	// 		hoopsvg.setAttribute('onmouseover','');
+			
+	// 		newevent["Action"] = "Pass Made";
+	// 		newevent2["Action"] = "Pass Received";
+	// 		maindata["Practices"][indexofpractice]["Data"][practicingarray.indexOf(currentplayer)]["ScrimmagePressure"].push(newevent);
+	// 		maindata["Practices"][indexofpractice]["Data"][practicingarray.indexOf(player1)]["ScrimmagePressure"].push(newevent2);
+
+	// 		currentplayer = player1;
+	// 		player1 = null;
+
+	// 		newevent = {};
+
+	// 		newevent = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent + "-a",
+	// 			"Location" : [newevent2["Location"][0],newevent2["Location"][1]],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()],
+	// 			"Action" : "Dribble"
+	// 		};
+
+	// 		newevent2 = {};
+
+	// 		newevent2 = {
+	// 			"Sequence" : currentsequence,
+	// 			"Event" : currentevent + "-b",
+	// 			"Location" : [event.pageX,event.pageY],
+	// 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()],
+	// 			"From" : currentplayer
+	// 		}
+
+	// 		var currentplayerid = currentplayer.toLowerCase().replace(" ","");
+	// 		document.getElementById(''+currentplayerid+'').style.display = "none";
+	// 	}
+	// }
+}
+
 // jss.set('.circleforplayers', {
 // 	'width': '' + .0495*window.innerHeight + 'px',
 // 	'height': '' + .0495*window.innerHeight + 'px',
