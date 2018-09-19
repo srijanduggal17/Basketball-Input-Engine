@@ -332,6 +332,17 @@ function getInitials(name) {
 	return currentinitials;
 }
 
+function chooseAction(act) {
+	newevent["Action"] = act;
+	actionbuttons.style.display = "none";
+
+	d3.select("#shots").selectAll("*").remove();
+	d3.select("#circle0").remove();
+
+	newevent = {};
+	shotwasattempted = 0;
+}
+
 // function inputData() {
 // 	var dt = new Date()
 
