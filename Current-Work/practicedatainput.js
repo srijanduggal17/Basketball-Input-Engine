@@ -20,11 +20,13 @@ for (var i = 0; i < roster["Roster"].length; i++) {
 var court = document.getElementById("courtgroup");
 const courtscale = 0.00154559566895681913;
 court.setAttribute('transform','scale(' + courtscale*window.innerHeight + ',' + courtscale*window.innerHeight + ')');
-var courtsvg = document.getElementById("court");
 const courtwidth = .808124*window.innerHeight;
-const courtheight = .758714*window.innerHeight
+const courtheight = .758714*window.innerHeight;
+const courtsvg = document.getElementById('court');
 courtsvg.setAttribute('width', `${courtwidth}`);
 courtsvg.setAttribute('height',`${courtheight}`);
+
+const jqcourt = $('#court');
 
 //Hoop SVG
 var hoop = document.getElementById("hoop");
@@ -53,9 +55,12 @@ function inputData() {
 	var dt = new Date()
 
 	//if (shotwasattempted === 0) {
+		const xloc = (event.pageX - jqcourt.offset().left)/courtwidth;
+		const yloc = (event.pageY - jqcourt.offset().top)/courtheight;
+		
 		newevent = {
 			"Action" : "",
-			"Location" : [event.pageX,event.pageY],
+			"Location" : [xloc,yloc],
 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()]
 		};
 
