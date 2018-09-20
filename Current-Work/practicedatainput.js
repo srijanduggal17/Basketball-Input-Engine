@@ -33,7 +33,7 @@ var hoop = document.getElementById("hoop");
 const hoopTopGap = .115;
 const hoopRadius = 0.01236476043276661515;
 const hoopx = courtwidth/2;
-const hoopy = hoopTopGap*courtheight
+const hoopy = hoopTopGap*courtheight;
 hoop.setAttribute('cx', `${hoopx}`);
 hoop.setAttribute('cy', `${hoopy}`);
 hoop.setAttribute('r', `${hoopRadius*window.innerHeight}`);
@@ -280,6 +280,7 @@ var currentshot = 0;
 
 var circlesvgwidth = .049459*window.innerHeight;
 var circleradius = .0247*window.innerHeight;
+const visualradius = .0231839*window.innerHeight;
 
 function choosePlayer(nam) {
 	playerdropdowndiv.style.display = "none";
@@ -287,18 +288,21 @@ function choosePlayer(nam) {
 
 	currentplayer = nam;
 
+	const leftloc = newevent["Location"][0]*courtwidth + jqcourt.offset().left - circleradius;
+	const rightloc = newevent["Location"][1]*courtheight + jqcourt.offset().top - circleradius;
+
 	d3.select("#circles").append('svg')
 						.attr('id','circle0')
 						.attr('width',circlesvgwidth)
 						.attr('height',circlesvgwidth)
 						.attr('class','circleforplayers')
-						.style('left',newevent["Location"][0] - circleradius)
-						.style('top',newevent["Location"][1] - circleradius)
+						.style('left', leftloc)
+						.style('top', rightloc)
 						.style('display','block')
 						.append('circle')
 						.attr('cx',.5*circlesvgwidth)
 						.attr('cy',.5*circlesvgwidth)
-						.attr('r',.0231839*window.innerHeight);
+						.attr('r', visualradius);
 	d3.select("#circle0").append('text')
 						.attr('x','50%')
 						.attr('y','65%')
@@ -310,7 +314,7 @@ function choosePlayer(nam) {
 
 	d3.select("#circles").style('display','block');
 
-	drawShotArrow(newevent["Location"][0],newevent["Location"][1]);
+	drawShotArrow(newevent["Location"][0]*courtwidth, newevent["Location"][1]*courtheight);
 	checkbutton.setAttribute('onclick','chooseAction("Shot Made")');
 	xbutton.setAttribute('onclick','chooseAction("Shot Missed")');
 
@@ -971,7 +975,7 @@ function chooseAction(act) {
 function drawShotArrow(xloc,yloc) {
 	//all of this is relative to top left corner of court
 	var centerx = xloc;
-	var centery = yloc - topspace;
+	var centery = yloc;
     
 	var diffx = hoopx - centerx;
 	var diffy = hoopy - centery;
