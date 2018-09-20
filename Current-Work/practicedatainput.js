@@ -1,7 +1,7 @@
 //File and setup
 var fs = nodeRequire('fs');
 var roster = JSON.parse(fs.readFileSync("roster.JSON", 'utf8'));
-const outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
+let outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
 
