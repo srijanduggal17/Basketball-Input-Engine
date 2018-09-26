@@ -5,8 +5,17 @@ let outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
 
+var today = new Date();
+
+var practicedata = {
+	"Date" : today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate(),
+	"Data" : []
+}
+
 // Load roster from roster.json
 for (var i = 0; i < roster["Roster"].length; i++) {
+	var today = new Date();
+
 	var playername = roster["Roster"][i]["Name"].toLowerCase().replace(" ","");
 	
 	var newplayerindropdown = document.createElement("a");
@@ -59,6 +68,8 @@ function inputData() {
 		const yloc = (event.pageY - jqcourt.offset().top)/courtheight;
 		
 		newevent = {
+			"Player" : "",
+			"Pressure" : "Scrimmage",
 			"Action" : "",
 			"Location" : [xloc,yloc],
 			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()]
@@ -283,6 +294,8 @@ var circleradius = .0247*window.innerHeight;
 const visualradius = .0231839*window.innerHeight;
 
 function choosePlayer(nam) {
+
+	newevent["Player"] = nam;
 	playerdropdowndiv.style.display = "none";
 	console.log('drillchoose');
 
@@ -343,8 +356,19 @@ function chooseAction(act) {
 	d3.select("#shots").selectAll("*").remove();
 	d3.select("#circle0").remove();
 
+	practicedata["Data"].push(newevent);
+
 	newevent = {};
 	shotwasattempted = 0;
+}
+
+function writeData() {
+	outputData["Practices"].push(practicedata);
+	fs.writeFile("savedata.json", JSON.stringify(outputData, null, "\t"), function (err) {
+        if (err != undefined) {
+            alert(err.message,"Data Save error")
+        }
+    });	
 }
 
 // function inputData() {
