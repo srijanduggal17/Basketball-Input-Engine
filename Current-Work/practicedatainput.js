@@ -1,7 +1,7 @@
 //File and setup
 var fs = nodeRequire('fs');
-var roster = JSON.parse(fs.readFileSync("roster.JSON", 'utf8'));
-let outputData = JSON.parse(fs.readFileSync('saveddata.json', 'utf8'));
+var roster = JSON.parse(fs.readFileSync("./resources/app/roster.JSON", 'utf8'));
+let outputData = JSON.parse(fs.readFileSync('./resources/app/saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
 
@@ -364,7 +364,7 @@ function chooseAction(act) {
 
 function writeData() {
 	outputData["Practices"].push(practicedata);
-	fs.writeFile("savedata.json", JSON.stringify(outputData, null, "\t"), function (err) {
+	fs.writeFile("./resources/app/savedata.json", JSON.stringify(outputData, null, "\t"), function (err) {
         if (err != undefined) {
             alert(err.message,"Data Save error")
         }
