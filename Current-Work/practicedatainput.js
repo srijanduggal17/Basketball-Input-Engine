@@ -1,16 +1,10 @@
 //File and setup
+
 var fs = nodeRequire('fs');
-var roster = JSON.parse(fs.readFileSync("./resources/app/roster.JSON", 'utf8'));
-let outputData = JSON.parse(fs.readFileSync('./resources/app/saveddata.json', 'utf8'));
+var roster = JSON.parse(fs.readFileSync(__dirname + "/roster.json", 'utf8'));
+var outputData = JSON.parse(fs.readFileSync(__dirname + '/saveddata.json', 'utf8'));
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
-
-var today = new Date();
-
-var practicedata = {
-	"Date" : today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate(),
-	"Data" : []
-}
 
 // Load roster from roster.json
 for (var i = 0; i < roster["Roster"].length; i++) {
@@ -34,6 +28,7 @@ const courtheight = .758714*window.innerHeight;
 const courtsvg = document.getElementById('court');
 courtsvg.setAttribute('width', `${courtwidth}`);
 courtsvg.setAttribute('height',`${courtheight}`);
+var savebutton = document.getElementById("savebutton");
 
 const jqcourt = $('#court');
 
@@ -356,19 +351,36 @@ function chooseAction(act) {
 	d3.select("#shots").selectAll("*").remove();
 	d3.select("#circle0").remove();
 
-	practicedata["Data"].push(newevent);
+	let i = outputData["Practices"].length - 1;
+	outputData["Practices"][i]["Data"].push(newevent);
+
+	fs.writeFile(__dirname + '/saveddata.json', JSON.stringify(outputData, null, "\t"), function (err) {
+        if (err != undefined) {
+            alert(err.message,"Data Save error")
+        }
+    });	
 
 	newevent = {};
 	shotwasattempted = 0;
 }
 
 function writeData() {
+	var today = new Date();
+
+	var practicedata = {
+		"Date" : today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate(),
+		"Data" : []
+	}
+
 	outputData["Practices"].push(practicedata);
-	fs.writeFile("./resources/app/savedata.json", JSON.stringify(outputData, null, "\t"), function (err) {
+
+	fs.writeFile(__dirname + '/saveddata.json', JSON.stringify(outputData, null, "\t"), function (err) {
         if (err != undefined) {
             alert(err.message,"Data Save error")
         }
     });	
+
+	savebutton.style.display = "none";
 }
 
 // function inputData() {
