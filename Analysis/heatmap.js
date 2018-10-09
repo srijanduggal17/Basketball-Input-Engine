@@ -1,6 +1,7 @@
-"use strict";
+'use strict';
 
 var playerDiv = document.getElementById('playerDiv');
+var makeMapButton = document.getElementById('makeMap');
 
 var roster = {
 	"Roster": [{
@@ -921,21 +922,21 @@ var data1 = {
 var playerChosen = 'Whole Team';
 var pressureChosen = "2018-9-30";
 
+function makeBuckets(rawData) {}
+
 ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }), playerDiv, function () {
-	var makeMapButton = document.getElementById('makeMap');
 	var playerDropdown = document.getElementById('playerDropdown');
 
 	function filterData() {
 		var byDate = data1.Practices.filter(function (x) {
 			return x.Date === pressureChosen;
 		})[0];
-		console.log(byDate);
 
 		if (playerChosen === 'Whole Team') return byDate.Data;
 		var byPlayer = byDate.Data.filter(function (x) {
 			return x.Player === playerChosen;
 		});
-		console.log(byPlayer);
+		return byPlayer;
 	}
 
 	function makeMap() {

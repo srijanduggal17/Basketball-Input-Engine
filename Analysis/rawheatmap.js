@@ -2241,6 +2241,26 @@ const data1 = {
 var playerChosen = 'Whole Team';
 var pressureChosen = "2018-9-30";
 
+function sum(total, currentValue) {
+	return total + currentValue;
+}
+
+function groupData(raw) {
+	const xlocData = rawData.map(x => x.Location[0]);
+	const ylocData = rawData.map(x => x.Location[1]);
+
+	const xc = (xlocData.reduce(sum, 0))/xlocData.length;
+	const yc = (ylocData.reduce(sum, 0))/ylocData.length;
+}
+
+function makeBuckets(rawData) {
+	//base case: data is ungroupable
+	if () {
+
+	} else {
+	}
+}
+
 ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 	const playerDropdown = document.getElementById('playerDropdown');
 
@@ -2263,6 +2283,9 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 
 		playerChosen = playerDropdown.value;
 		let mapData = filterData();
+		if (mapData.length > 0) {
+			let buckets = makeBuckets(mapData);
+		}
 		console.log(mapData);
 	}
 
