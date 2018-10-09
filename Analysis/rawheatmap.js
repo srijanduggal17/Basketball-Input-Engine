@@ -2237,7 +2237,7 @@ const data1 = {
 	]
 };
 
-var playerChosen = null;
+var playerChosen = 'Whole Team';
 var pressureChosen = "2018-9-30";
 
 ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
@@ -2245,8 +2245,11 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 	const playerDropdown = document.getElementById('playerDropdown')
 
 	function filterData() {
-		let newSet = data1.Practices.filter(x => x.Date === pressureChosen);
-		console.log(newSet);
+		const byDate = data1.Practices.filter(x => x.Date === pressureChosen)[0];
+
+		if (playerChosen === 'Whole Team') return byDate.Data;
+		const byPlayer = byDate.Data.filter(x => x.Player === playerChosen);
+		return byPlayer;
 	}
 
 	function makeMap() {
@@ -2260,6 +2263,7 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 
 		playerChosen = playerDropdown.value;
 		let mapData = filterData();
+		console.log(mapData);
 	}
 
 	makeMapButton.addEventListener('click', makeMap);
