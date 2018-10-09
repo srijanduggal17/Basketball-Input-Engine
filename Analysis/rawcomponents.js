@@ -16,3 +16,15 @@ class PlayerDropdown extends React.Component {
 		)
 	}
 }
+
+class PressureDropdown extends React.Component {
+	render() {
+		return (
+			<div id="pressuredropdowndiv"> 
+				<option>Game</option>
+				<option>Scrimmage</option>
+				<option>Drill</option>
+			</div>
+		)
+	}
+}
