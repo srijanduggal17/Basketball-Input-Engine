@@ -9,8 +9,8 @@ class PlayerChoice extends React.Component {
 class PlayerDropdown extends React.Component {
 	render() {
 		return (
-			<select id="playerDiv">
-				<option>select player</option>
+			<select id="playerDropdown">
+				<option>Whole Team</option>
 				{this.props.options.map(x => <PlayerChoice name={x.Name} />)}
 			</select>
 		)

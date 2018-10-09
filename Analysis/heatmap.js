@@ -1,6 +1,6 @@
 "use strict";
 
-var playerDiv = document.getElementById("playerDiv");
+var playerDiv = document.getElementById('playerDiv');
 
 var roster = {
 	"Roster": [{
@@ -22,7 +22,7 @@ var roster = {
 	}, {
 		"Name": "Eddy Wu"
 	}, {
-		"Name": "Hongyang X"
+		"Name": "Hongyang Zhou"
 	}, {
 		"Name": "Roger Wang"
 	}, {
@@ -44,4 +44,16 @@ var roster = {
 	}]
 };
 
-ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }), playerDiv);
+var playerChosen = null;
+
+ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }), playerDiv, function () {
+	var makeMapButton = document.getElementById('makeMap');
+	var playerDropdown = document.getElementById('playerDropdown');
+
+	function makeMap() {
+		playerChosen = playerDropdown.value;
+		console.log(playerChosen);
+	}
+
+	makeMapButton.addEventListener('click', makeMap);
+});

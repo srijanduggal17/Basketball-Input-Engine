@@ -45,11 +45,11 @@ var PlayerDropdown = function (_React$Component2) {
 		value: function render() {
 			return React.createElement(
 				"select",
-				{ id: "playerDiv" },
+				{ id: "playerDropdown" },
 				React.createElement(
 					"option",
 					null,
-					"select player"
+					"Whole Team"
 				),
 				this.props.options.map(function (x) {
 					return React.createElement(PlayerChoice, { name: x.Name });

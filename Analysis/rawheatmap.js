@@ -1,4 +1,4 @@
-const playerDiv = document.getElementById("playerDiv");
+const playerDiv = document.getElementById('playerDiv');
 
 const roster = {
 	"Roster": [
@@ -62,4 +62,15 @@ const roster = {
 	]
 };
 
-ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv);
+var playerChosen = null;
+
+ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
+	const makeMapButton = document.getElementById('makeMap');
+	const playerDropdown = document.getElementById('playerDropdown')
+
+	function makeMap() {
+		playerChosen = playerDropdown.value;
+	}
+
+	makeMapButton.addEventListener('click', makeMap);
+});
