@@ -2238,11 +2238,16 @@ const data1 = {
 };
 
 var playerChosen = null;
-var pressureChosen = null;
+var pressureChosen = "2018-9-30";
 
 ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 	const makeMapButton = document.getElementById('makeMap');
 	const playerDropdown = document.getElementById('playerDropdown')
+
+	function filterData() {
+		let newSet = data1.Practices.filter(x => x.Date === pressureChosen);
+		console.log(newSet);
+	}
 
 	function makeMap() {
 		if (playerChosen === null) {
@@ -2252,7 +2257,9 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 			alert('Choose pressure');
 			return;
 		}
+
 		playerChosen = playerDropdown.value;
+		let mapData = filterData();
 	}
 
 	makeMapButton.addEventListener('click', makeMap);
