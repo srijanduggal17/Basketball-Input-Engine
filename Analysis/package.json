@@ -2,10 +2,11 @@
   "name": "web",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
     "babel-version": "babel --version",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run transpile && electron .",
     "transpile": "babel rawcomponents.js --out-file components.js && babel rawheatmap.js --out-file heatmap.js"
   },
   "author": "",
@@ -21,6 +22,7 @@
     "react-dom": "^16.4.0"
   },
   "devDependencies": {
+    "electron": "^2.0.9",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
