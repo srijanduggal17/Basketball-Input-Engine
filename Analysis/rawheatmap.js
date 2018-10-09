@@ -30,7 +30,7 @@ const roster = {
 			"Name": "Eddy Wu"
 		},
 		{
-			"Name": "Hongyang X"
+			"Name": "Hongyang Zhou"
 		},
 		{
 			"Name": "Roger Wang"
