@@ -1,5 +1,7 @@
 'use strict';
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var playerDiv = document.getElementById('playerDiv');
 var makeMapButton = document.getElementById('makeMap');
 
@@ -922,7 +924,93 @@ var data1 = {
 var playerChosen = 'Whole Team';
 var pressureChosen = "2018-9-30";
 
-function makeBuckets(rawData) {}
+function sum(total, currentValue) {
+	return [total[0] + currentValue[0], total[1] + currentValue[1]];
+}
+
+function findCentroid(raw) {
+	return raw.reduce(sum).map(function (x) {
+		return x / raw.length;
+	});
+}
+
+function findDistance(point1, point2) {
+	var vector = [point2[0] - point1[0], point2[1] - point1[1]];
+	return Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
+}
+
+var findMax = function findMax(a, b) {
+	return Math.max(a, b);
+};
+var findMin = function findMin(a, b) {
+	return Math.min(a, b);
+};
+
+function makeGroup(raw) {
+	if (raw.length === 1) {
+		return {
+			group: [],
+			nongroup: raw
+		};
+	} else {
+		var locData = raw.map(function (x) {
+			return x.Location;
+		});
+		var k = .2;
+		var centroid = findCentroid(locData);
+		var distances = locData.map(function (x) {
+			return findDistance(centroid, x);
+		});
+		var max = distances.reduce(findMax);
+		var min = distances.reduce(findMin);
+
+		if (max < k) {
+			return {
+				group: raw,
+				nongroup: []
+			};
+		} else if (min > k) {
+			return {
+				group: [],
+				nongroup: raw
+			};
+		} else {
+			var maxInd = distances.indexOf(max);
+			var maxData = raw[maxInd];
+			var pointsToGroup = raw;
+			pointsToGroup.splice(maxInd, 1);
+			var result = makeGroup(pointsToGroup);
+			console.log(maxInd);
+			console.log(JSON.stringify(raw));
+			return {
+				group: result.group,
+				nongroup: [].concat(_toConsumableArray(result.nongroup), [maxData])
+			};
+		}
+	}
+}
+
+function makeBuckets(raw) {
+	var firstGroup = makeGroup(raw);
+
+	if (firstGroup.nongroup.length === 0) {
+		return {
+			groups: [firstGroup.group],
+			nongroup: []
+		};
+	} else if (firstGroup.group.length === 0) {
+		return {
+			groups: [],
+			nongroup: firstGroup.nongroup
+		};
+	} else {
+		var newGroup = makeBuckets(firstGroup.nongroup);
+		return {
+			groups: [firstGroup.group].concat(_toConsumableArray(newGroup.groups)),
+			nongroup: newGroup.nongroup
+		};
+	}
+}
 
 ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }), playerDiv, function () {
 	var playerDropdown = document.getElementById('playerDropdown');
@@ -950,7 +1038,8 @@ ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }),
 
 		playerChosen = playerDropdown.value;
 		var mapData = filterData();
-		console.log(mapData);
+		var groupedData = makeBuckets(mapData);
+		console.log(groupedData);
 	}
 
 	makeMapButton.addEventListener('click', makeMap);

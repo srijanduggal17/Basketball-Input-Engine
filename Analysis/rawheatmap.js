@@ -2242,22 +2242,81 @@ var playerChosen = 'Whole Team';
 var pressureChosen = "2018-9-30";
 
 function sum(total, currentValue) {
-	return total + currentValue;
+	return [total[0]+currentValue[0], total[1] + currentValue[1]];
 }
 
-function groupData(raw) {
-	const xlocData = rawData.map(x => x.Location[0]);
-	const ylocData = rawData.map(x => x.Location[1]);
-
-	const xc = (xlocData.reduce(sum, 0))/xlocData.length;
-	const yc = (ylocData.reduce(sum, 0))/ylocData.length;
+function findCentroid(raw) {
+	return raw.reduce(sum).map(x => x/raw.length);
 }
 
-function makeBuckets(rawData) {
-	//base case: data is ungroupable
-	if () {
+function findDistance(point1, point2) {
+	const vector = [point2[0] - point1[0], point2[1] - point1[1]];
+	return Math.sqrt(vector[0]**2 + vector[1]**2)
+}
 
+const findMax = (a, b) => Math.max(a,b);
+const findMin = (a, b) => Math.min(a,b);
+
+function makeGroup(raw) {
+	if (raw.length === 1) {
+		return {
+			group: [],
+			nongroup: raw
+		}
 	} else {
+		const locData = raw.map(x => x.Location);
+		const k = .2;
+		const centroid = findCentroid(locData);
+		const distances = locData.map(x => findDistance(centroid, x));
+		const max = distances.reduce(findMax);
+		const min = distances.reduce(findMin);
+
+		 
+		if (max < k) {
+			return {
+				group: raw,
+				nongroup: []
+			};
+		} else if (min > k) {
+			return {
+				group: [],
+				nongroup: raw
+			};
+		} else {
+			const maxInd = distances.indexOf(max);
+			const maxData = raw[maxInd];
+			let pointsToGroup = raw;
+			pointsToGroup.splice(maxInd, 1);
+			const result = makeGroup(pointsToGroup);
+			console.log(maxInd);
+			console.log(JSON.stringify(raw));
+			return {
+				group: result.group,
+				nongroup: [...result.nongroup, maxData]
+			};
+		}
+	}
+}
+
+function makeBuckets(raw) {
+	const firstGroup = makeGroup(raw);
+
+	if (firstGroup.nongroup.length === 0) {
+		return {
+			groups: [firstGroup.group],
+			nongroup: []
+		};
+	} else if (firstGroup.group.length === 0) {
+		return {
+			groups: [],
+			nongroup: firstGroup.nongroup
+		};
+	} else {
+		const newGroup = makeBuckets(firstGroup.nongroup);
+		return {
+			groups: [firstGroup.group, ...newGroup.groups],
+			nongroup: newGroup.nongroup
+		};
 	}
 }
 
@@ -2282,11 +2341,9 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 		}
 
 		playerChosen = playerDropdown.value;
-		let mapData = filterData();
-		if (mapData.length > 0) {
-			let buckets = makeBuckets(mapData);
-		}
-		console.log(mapData);
+		const mapData = filterData();
+		const groupedData = makeBuckets(mapData);
+		console.log(groupedData);
 	}
 
 	makeMapButton.addEventListener('click', makeMap);

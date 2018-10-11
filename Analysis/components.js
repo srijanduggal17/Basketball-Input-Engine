@@ -60,3 +60,40 @@ var PlayerDropdown = function (_React$Component2) {
 
 	return PlayerDropdown;
 }(React.Component);
+
+var PressureDropdown = function (_React$Component3) {
+	_inherits(PressureDropdown, _React$Component3);
+
+	function PressureDropdown() {
+		_classCallCheck(this, PressureDropdown);
+
+		return _possibleConstructorReturn(this, (PressureDropdown.__proto__ || Object.getPrototypeOf(PressureDropdown)).apply(this, arguments));
+	}
+
+	_createClass(PressureDropdown, [{
+		key: "render",
+		value: function render() {
+			return React.createElement(
+				"div",
+				{ id: "pressuredropdowndiv" },
+				React.createElement(
+					"option",
+					null,
+					"Game"
+				),
+				React.createElement(
+					"option",
+					null,
+					"Scrimmage"
+				),
+				React.createElement(
+					"option",
+					null,
+					"Drill"
+				)
+			);
+		}
+	}]);
+
+	return PressureDropdown;
+}(React.Component);
