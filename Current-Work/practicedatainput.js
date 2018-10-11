@@ -8,7 +8,6 @@ var playerdropdowndiv = document.getElementById("playerdropdown");
 
 // Load roster from roster.json
 for (var i = 0; i < roster["Roster"].length; i++) {
-	var today = new Date();
 
 	var playername = roster["Roster"][i]["Name"].toLowerCase().replace(" ","");
 	
@@ -67,7 +66,7 @@ function inputData() {
 			"Pressure" : "Scrimmage",
 			"Action" : "",
 			"Location" : [xloc,yloc],
-			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()]
+			"Time" : [dt.getHours(), dt.getMinutes(), dt.getSeconds(), dt.getMilliseconds()]
 		};
 
 		playerdropdowndiv.style.display = "block";
