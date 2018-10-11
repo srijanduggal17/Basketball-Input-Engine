@@ -980,8 +980,6 @@ function makeGroup(raw) {
 			var pointsToGroup = raw;
 			pointsToGroup.splice(maxInd, 1);
 			var result = makeGroup(pointsToGroup);
-			console.log(maxInd);
-			console.log(JSON.stringify(raw));
 			return {
 				group: result.group,
 				nongroup: [].concat(_toConsumableArray(result.nongroup), [maxData])
@@ -1038,6 +1036,7 @@ ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }),
 
 		playerChosen = playerDropdown.value;
 		var mapData = filterData();
+		console.log(mapData.length);
 		var groupedData = makeBuckets(mapData);
 		console.log(groupedData);
 	}
