@@ -6,9 +6,10 @@ var outputData = JSON.parse(fs.readFileSync(__dirname + '/saveddata.json', 'utf8
 
 var playerdropdowndiv = document.getElementById("playerdropdown");
 
+var pressure = "Drill";
+
 // Load roster from roster.json
 for (var i = 0; i < roster["Roster"].length; i++) {
-	var today = new Date();
 
 	var playername = roster["Roster"][i]["Name"].toLowerCase().replace(" ","");
 	
@@ -18,6 +19,8 @@ for (var i = 0; i < roster["Roster"].length; i++) {
 	newplayerindropdown.setAttribute('onclick',"choosePlayer('" + roster["Roster"][i]["Name"] + "')");				
 	playerdropdowndiv.appendChild(newplayerindropdown);
 }
+
+alert("Please add date and choose pressure level!");
 
 //Court SVG
 var court = document.getElementById("courtgroup");
@@ -64,10 +67,10 @@ function inputData() {
 		
 		newevent = {
 			"Player" : "",
-			"Pressure" : "Scrimmage",
+			"Pressure" : pressure,
 			"Action" : "",
 			"Location" : [xloc,yloc],
-			"Time" : [dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds()]
+			"Time" : [dt.getHours(), dt.getMinutes(), dt.getSeconds(), dt.getMilliseconds()]
 		};
 
 		playerdropdowndiv.style.display = "block";
@@ -287,6 +290,10 @@ var currentshot = 0;
 var circlesvgwidth = .049459*window.innerHeight;
 var circleradius = .0247*window.innerHeight;
 const visualradius = .0231839*window.innerHeight;
+
+function choosePressure(press) {
+	pressure = press;
+}
 
 function choosePlayer(nam) {
 
