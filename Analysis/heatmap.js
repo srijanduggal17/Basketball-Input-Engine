@@ -5,6 +5,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var playerDiv = document.getElementById('playerDiv');
 var makeMapButton = document.getElementById('makeMap');
 
+//Court SVG
+var court = document.getElementById("courtgroup");
+var courtscale = 0.00154559566895681913;
+court.setAttribute('transform', 'scale(' + courtscale * window.innerHeight + ',' + courtscale * window.innerHeight + ')');
+var courtwidth = .808124 * window.innerHeight;
+var courtheight = .758714 * window.innerHeight;
+var courtsvg = document.getElementById('court');
+courtsvg.setAttribute('width', '' + courtwidth);
+courtsvg.setAttribute('height', '' + courtheight);
+
+//Hoop SVG
+var hoop = document.getElementById("hoop");
+var hoopTopGap = .115;
+var hoopRadius = 0.01236476043276661515;
+var hoopx = courtwidth / 2;
+var hoopy = hoopTopGap * courtheight;
+hoop.setAttribute('cx', '' + hoopx);
+hoop.setAttribute('cy', '' + hoopy);
+hoop.setAttribute('r', '' + hoopRadius * window.innerHeight);
+
 var roster = {
 	"Roster": [{
 		"Name": "Rus Hu"
@@ -1012,6 +1032,7 @@ function makeBuckets(raw) {
 
 ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }), playerDiv, function () {
 	var playerDropdown = document.getElementById('playerDropdown');
+	var app = document.getElementById('app');
 
 	function filterData() {
 		var byDate = data1.Practices.filter(function (x) {
@@ -1036,9 +1057,10 @@ ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }),
 
 		playerChosen = playerDropdown.value;
 		var mapData = filterData();
-		console.log(mapData.length);
 		var groupedData = makeBuckets(mapData);
 		console.log(groupedData);
+
+		// ReactDOM.render(<HeatMap data={groupedData} />, app)
 	}
 
 	makeMapButton.addEventListener('click', makeMap);

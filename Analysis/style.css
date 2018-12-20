@@ -1,0 +1,29 @@
+.courtpath {
+	fill:none;
+	stroke:#000000;
+}
+
+#hoop {
+    fill: none;
+    stroke: #000;
+    z-index: 5;
+}
+
+#hoopgroup {
+    position: absolute;
+    z-index: 10;
+}
+
+#svgstuff {
+    position: relative;
+}
+
+#court {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#circles {
+    display: none;
+}

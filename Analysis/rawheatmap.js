@@ -1,6 +1,26 @@
 const playerDiv = document.getElementById('playerDiv');
 const makeMapButton = document.getElementById('makeMap');
 
+//Court SVG
+var court = document.getElementById("courtgroup");
+const courtscale = 0.00154559566895681913;
+court.setAttribute('transform','scale(' + courtscale*window.innerHeight + ',' + courtscale*window.innerHeight + ')');
+const courtwidth = .808124*window.innerHeight;
+const courtheight = .758714*window.innerHeight;
+const courtsvg = document.getElementById('court');
+courtsvg.setAttribute('width', `${courtwidth}`);
+courtsvg.setAttribute('height',`${courtheight}`);
+
+//Hoop SVG
+var hoop = document.getElementById("hoop");
+const hoopTopGap = .115;
+const hoopRadius = 0.01236476043276661515;
+const hoopx = courtwidth/2;
+const hoopy = hoopTopGap*courtheight;
+hoop.setAttribute('cx', `${hoopx}`);
+hoop.setAttribute('cy', `${hoopy}`);
+hoop.setAttribute('r', `${hoopRadius*window.innerHeight}`);
+
 const roster = {
 	"Roster": [
 		{
@@ -2320,6 +2340,7 @@ function makeBuckets(raw) {
 
 ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 	const playerDropdown = document.getElementById('playerDropdown');
+	const app = document.getElementById('app');
 
 	function filterData() {
 		const byDate = data1.Practices.filter(x => x.Date === pressureChosen)[0];
@@ -2340,9 +2361,10 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 
 		playerChosen = playerDropdown.value;
 		const mapData = filterData();
-		console.log(mapData.length);
 		const groupedData = makeBuckets(mapData);
 		console.log(groupedData);
+
+		// ReactDOM.render(<HeatMap data={groupedData} />, app)
 	}
 
 	makeMapButton.addEventListener('click', makeMap);
