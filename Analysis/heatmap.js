@@ -1058,6 +1058,15 @@ ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }),
 		playerChosen = playerDropdown.value;
 		var mapData = filterData();
 		var groupedData = makeBuckets(mapData);
+		groupedData = groupedData.groups.map(function (x) {
+			var locs = x.map(function (y) {
+				return y.Location;
+			});
+			return {
+				data: x,
+				centroid: findCentroid(locs)
+			};
+		});
 		console.log(groupedData);
 
 		ReactDOM.render(React.createElement(HeatMap, { data: groupedData }), shotsGroup);

@@ -116,10 +116,6 @@ var HeatMap = function (_React$Component4) {
 				x.Location[1] = Math.round(x.Location[1] * 100);
 			});
 
-			data.push({ Location: [100, 100] }, { Location: [50, 50] }, { Location: [50, 100] });
-
-			console.log(data);
-
 			return React.createElement(
 				"g",
 				null,
