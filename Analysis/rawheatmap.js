@@ -2340,7 +2340,7 @@ function makeBuckets(raw) {
 
 ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 	const playerDropdown = document.getElementById('playerDropdown');
-	const app = document.getElementById('app');
+	const shotsGroup = document.getElementById('shotsgroup');
 
 	function filterData() {
 		const byDate = data1.Practices.filter(x => x.Date === pressureChosen)[0];
@@ -2364,7 +2364,7 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 		const groupedData = makeBuckets(mapData);
 		console.log(groupedData);
 
-		// ReactDOM.render(<HeatMap data={groupedData} />, app)
+		ReactDOM.render(<HeatMap data={groupedData} />, shotsGroup)
 	}
 
 	makeMapButton.addEventListener('click', makeMap);

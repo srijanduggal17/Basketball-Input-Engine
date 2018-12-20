@@ -98,9 +98,37 @@ var PressureDropdown = function (_React$Component3) {
 	return PressureDropdown;
 }(React.Component);
 
-// class HeatMap extends React.Component {
-// 	render() {
-// 		return (
-// 		)
-// 	}
-// }
+var HeatMap = function (_React$Component4) {
+	_inherits(HeatMap, _React$Component4);
+
+	function HeatMap() {
+		_classCallCheck(this, HeatMap);
+
+		return _possibleConstructorReturn(this, (HeatMap.__proto__ || Object.getPrototypeOf(HeatMap)).apply(this, arguments));
+	}
+
+	_createClass(HeatMap, [{
+		key: "render",
+		value: function render() {
+			var data = this.props.data.groups[0];
+			data.forEach(function (x) {
+				x.Location[0] = Math.round(x.Location[0] * 100);
+				x.Location[1] = Math.round(x.Location[1] * 100);
+			});
+
+			data.push({ Location: [100, 100] }, { Location: [50, 50] }, { Location: [50, 100] });
+
+			console.log(data);
+
+			return React.createElement(
+				"g",
+				null,
+				data.map(function (x) {
+					return React.createElement("circle", { r: "2", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+				})
+			);
+		}
+	}]);
+
+	return HeatMap;
+}(React.Component);
