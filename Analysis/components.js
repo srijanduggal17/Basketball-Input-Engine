@@ -110,17 +110,45 @@ var HeatMap = function (_React$Component4) {
 	_createClass(HeatMap, [{
 		key: "render",
 		value: function render() {
-			var data = this.props.data.groups[0];
-			data.forEach(function (x) {
-				x.Location[0] = Math.round(x.Location[0] * 100);
-				x.Location[1] = Math.round(x.Location[1] * 100);
+			console.log(this.props.data);
+
+			var data = this.props.data;
+
+			var nongroup = data.nongroup;
+			nongroup.forEach(function (x) {
+				x.Location[0] = Math.round(x.Location[0] * 10000) / 100;
+				x.Location[1] = Math.round(x.Location[1] * 10000) / 100;
 			});
+
+			var groups = data.groups;
 
 			return React.createElement(
 				"g",
 				null,
-				data.map(function (x) {
-					return React.createElement("circle", { r: "2", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+				React.createElement(
+					"g",
+					null,
+					nongroup.map(function (x) {
+						return React.createElement("circle", { r: "1.5", fill: "blue", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+					})
+				),
+				groups.map(function (y) {
+					y.data.forEach(function (x) {
+						x.Location[0] = Math.round(x.Location[0] * 10000) / 100;
+						x.Location[1] = Math.round(x.Location[1] * 10000) / 100;
+					});
+
+					y.centroid[0] = Math.round(y.centroid[0] * 10000) / 100;
+					y.centroid[1] = Math.round(y.centroid[1] * 10000) / 100;
+
+					return React.createElement(
+						"g",
+						null,
+						y.data.map(function (x) {
+							return React.createElement("circle", { r: "1", fill: "blue", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+						}),
+						React.createElement("circle", { r: "5%", fill: "none", stroke: "black", cx: y.centroid[0] + "%", cy: y.centroid[1] + "%" })
+					);
 				})
 			);
 		}

@@ -1,6 +1,8 @@
 const playerDiv = document.getElementById('playerDiv');
 const makeMapButton = document.getElementById('makeMap');
 
+const fs = nodeRequire('fs')
+
 //Court SVG
 var court = document.getElementById("courtgroup");
 const courtscale = 0.00154559566895681913;
@@ -2285,7 +2287,7 @@ function makeGroup(raw) {
 		}
 	} else {
 		const locData = raw.map(x => x.Location);
-		const k = .2;
+		const k = .05;
 		const centroid = findCentroid(locData);
 		const distances = locData.map(x => findDistance(centroid, x));
 		const max = distances.reduce(findMax);
@@ -2361,15 +2363,15 @@ ReactDOM.render(<PlayerDropdown options={roster.Roster} />, playerDiv, () => {
 
 		playerChosen = playerDropdown.value;
 		const mapData = filterData();
+		const result = mapData.map(x => x.Location);
 		let groupedData = makeBuckets(mapData);
-		groupedData = groupedData.groups.map(x => {
+		groupedData.groups = groupedData.groups.map(x => {
 			const locs = x.map(y => y.Location);
 			return {
 				data: x,
 				centroid: findCentroid(locs)
 			};
 		});
-		console.log(groupedData);
 
 		ReactDOM.render(<HeatMap data={groupedData} />, shotsGroup)
 	}

@@ -5,6 +5,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var playerDiv = document.getElementById('playerDiv');
 var makeMapButton = document.getElementById('makeMap');
 
+var fs = nodeRequire('fs');
+
 //Court SVG
 var court = document.getElementById("courtgroup");
 var courtscale = 0.00154559566895681913;
@@ -976,7 +978,7 @@ function makeGroup(raw) {
 		var locData = raw.map(function (x) {
 			return x.Location;
 		});
-		var k = .2;
+		var k = .05;
 		var centroid = findCentroid(locData);
 		var distances = locData.map(function (x) {
 			return findDistance(centroid, x);
@@ -1057,17 +1059,21 @@ ReactDOM.render(React.createElement(PlayerDropdown, { options: roster.Roster }),
 
 		playerChosen = playerDropdown.value;
 		var mapData = filterData();
-		var groupedData = makeBuckets(mapData);
-		groupedData = groupedData.groups.map(function (x) {
-			var locs = x.map(function (y) {
-				return y.Location;
-			});
-			return {
-				data: x,
-				centroid: findCentroid(locs)
-			};
+		var result = mapData.map(function (x) {
+			return x.Location;
 		});
-		console.log(groupedData);
+
+		fs.writeFileSync('stuff.csv', result);
+		console.log('done');
+		console.log(result);
+		// let groupedData = makeBuckets(mapData);
+		// groupedData.groups = groupedData.groups.map(x => {
+		// 	const locs = x.map(y => y.Location);
+		// 	return {
+		// 		data: x,
+		// 		centroid: findCentroid(locs)
+		// 	};
+		// });
 
 		ReactDOM.render(React.createElement(HeatMap, { data: groupedData }), shotsGroup);
 	}

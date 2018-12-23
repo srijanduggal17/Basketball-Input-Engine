@@ -31,15 +31,40 @@ class PressureDropdown extends React.Component {
 
 class HeatMap extends React.Component {
 	render() {
-		let data = this.props.data.groups[0]
-		data.forEach(x => {
-			x.Location[0] = Math.round(x.Location[0]*100);
-			x.Location[1] = Math.round(x.Location[1]*100);			
+		console.log(this.props.data);
+
+		let data = this.props.data;
+
+
+		let nongroup = data.nongroup;
+		nongroup.forEach(x => {
+			x.Location[0] = Math.round(x.Location[0]*10000)/100;
+			x.Location[1] = Math.round(x.Location[1]*10000)/100;			
 		});
+
+		let groups = data.groups;
 
 		return (
 			<g>
-				{data.map(x => <circle r="2" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
+				<g>
+					{nongroup.map(x => <circle r="1.5" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
+				</g>
+				{groups.map(y => {
+					y.data.forEach(x => {
+						x.Location[0] = Math.round(x.Location[0]*10000)/100;
+						x.Location[1] = Math.round(x.Location[1]*10000)/100;			
+					});
+
+					y.centroid[0] = Math.round(y.centroid[0]*10000)/100;
+					y.centroid[1] = Math.round(y.centroid[1]*10000)/100;
+
+					return (
+						<g>
+							{y.data.map(x => <circle r="1" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
+							<circle r="5%" fill="none" stroke="black" cx={`${y.centroid[0]}%`} cy={`${y.centroid[1]}%`}></circle>
+						</g>
+					)
+				})}
 			</g>
 		)
 	}
