@@ -50,18 +50,18 @@ class HeatMap extends React.Component {
 					{nongroup.map(x => <circle r="1.5" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
 				</g>
 				{groups.map(y => {
-					y.data.forEach(x => {
+					y.pts.forEach(x => {
 						x.Location[0] = Math.round(x.Location[0]*10000)/100;
 						x.Location[1] = Math.round(x.Location[1]*10000)/100;			
 					});
 
-					y.centroid[0] = Math.round(y.centroid[0]*10000)/100;
-					y.centroid[1] = Math.round(y.centroid[1]*10000)/100;
+					y.center[0] = Math.round(y.center[0]*10000)/100;
+					y.center[1] = Math.round(y.center[1]*10000)/100;
 
 					return (
 						<g>
-							{y.data.map(x => <circle r="1" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
-							<circle r="5%" fill="none" stroke="black" cx={`${y.centroid[0]}%`} cy={`${y.centroid[1]}%`}></circle>
+							{y.pts.map(x => <circle r="1" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
+							<circle r="5%" fill="none" stroke="black" cx={`${y.center[0]}%`} cy={`${y.center[1]}%`}></circle>
 						</g>
 					)
 				})}
