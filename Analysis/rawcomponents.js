@@ -30,6 +30,18 @@ class PressureDropdown extends React.Component {
 }
 
 class HeatMap extends React.Component {
+	calculateAccuracy(data) {
+		let shotsMade = 0;
+		let shotsMissed = 0;
+
+		data.forEach(x => {
+			if (x.Action === "Shot Made") shotsMade += 1;
+			else if (x.Action === "Shot Missed") shotsMissed += 1;
+		});
+		
+		return Math.round(100*shotsMade/(shotsMade + shotsMissed));
+	}
+
 	render() {
 		console.log(this.props.data);
 
@@ -47,23 +59,46 @@ class HeatMap extends React.Component {
 		return (
 			<g>
 				<g>
-					{nongroup.map(x => <circle r="1.5" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
+					{nongroup.map(x => {
+						if (x.Action = "Shot Missed") {
+							return (<circle r="1.5" fill="red" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)
+						} else if (x.Action = "Shot Made") {
+							return (<circle r="1.5" fill="green" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)
+						}
+					})}
+					
 				</g>
 				{groups.map(y => {
-					y.data.forEach(x => {
+					y.pts.forEach(x => {
 						x.Location[0] = Math.round(x.Location[0]*10000)/100;
 						x.Location[1] = Math.round(x.Location[1]*10000)/100;			
 					});
 
-					y.centroid[0] = Math.round(y.centroid[0]*10000)/100;
-					y.centroid[1] = Math.round(y.centroid[1]*10000)/100;
+					y.center[0] = Math.round(y.center[0]*10000)/100;
+					y.center[1] = Math.round(y.center[1]*10000)/100;
 
-					return (
-						<g>
-							{y.data.map(x => <circle r="1" fill="blue" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)}
-							<circle r="5%" fill="none" stroke="black" cx={`${y.centroid[0]}%`} cy={`${y.centroid[1]}%`}></circle>
-						</g>
-					)
+					if (y.pts.length > 5) {
+						const accuracy = this.calculateAccuracy(y.pts);
+						const color = `hsl(${accuracy},100%,50%)`;
+						return (
+							<g>
+								<circle r="4%" fill={color} stroke="black" cx={`${y.center[0]}%`} cy={`${y.center[1]}%`}></circle>
+							</g>
+						)
+					} else {
+						return (
+							<g>
+								{y.pts.map(x => {
+									if (x.Action = "Shot Missed") {
+										return (<circle r="1.5" fill="red" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)
+									} else if (x.Action = "Shot Made") {
+										return (<circle r="1.5" fill="green" cx={`${x.Location[0]}%`} cy={`${x.Location[1]}%`}></circle>)
+									}
+								})}
+								<circle r="4%" fill="none" stroke="black" cx={`${y.center[0]}%`} cy={`${y.center[1]}%`}></circle>
+							</g>
+						)
+					}
 				})}
 			</g>
 		)

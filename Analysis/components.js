@@ -108,8 +108,22 @@ var HeatMap = function (_React$Component4) {
 	}
 
 	_createClass(HeatMap, [{
+		key: "calculateAccuracy",
+		value: function calculateAccuracy(data) {
+			var shotsMade = 0;
+			var shotsMissed = 0;
+
+			data.forEach(function (x) {
+				if (x.Action === "Shot Made") shotsMade += 1;else if (x.Action === "Shot Missed") shotsMissed += 1;
+			});
+
+			return Math.round(100 * shotsMade / (shotsMade + shotsMissed));
+		}
+	}, {
 		key: "render",
 		value: function render() {
+			var _this5 = this;
+
 			console.log(this.props.data);
 
 			var data = this.props.data;
@@ -129,26 +143,44 @@ var HeatMap = function (_React$Component4) {
 					"g",
 					null,
 					nongroup.map(function (x) {
-						return React.createElement("circle", { r: "1.5", fill: "blue", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+						if (x.Action = "Shot Missed") {
+							return React.createElement("circle", { r: "1.5", fill: "red", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+						} else if (x.Action = "Shot Made") {
+							return React.createElement("circle", { r: "1.5", fill: "green", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+						}
 					})
 				),
 				groups.map(function (y) {
-					y.data.forEach(function (x) {
+					y.pts.forEach(function (x) {
 						x.Location[0] = Math.round(x.Location[0] * 10000) / 100;
 						x.Location[1] = Math.round(x.Location[1] * 10000) / 100;
 					});
 
-					y.centroid[0] = Math.round(y.centroid[0] * 10000) / 100;
-					y.centroid[1] = Math.round(y.centroid[1] * 10000) / 100;
+					y.center[0] = Math.round(y.center[0] * 10000) / 100;
+					y.center[1] = Math.round(y.center[1] * 10000) / 100;
 
-					return React.createElement(
-						"g",
-						null,
-						y.data.map(function (x) {
-							return React.createElement("circle", { r: "1", fill: "blue", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
-						}),
-						React.createElement("circle", { r: "5%", fill: "none", stroke: "black", cx: y.centroid[0] + "%", cy: y.centroid[1] + "%" })
-					);
+					if (y.pts.length > 5) {
+						var accuracy = _this5.calculateAccuracy(y.pts);
+						var color = "hsl(" + accuracy + ",100%,50%)";
+						return React.createElement(
+							"g",
+							null,
+							React.createElement("circle", { r: "4%", fill: color, stroke: "black", cx: y.center[0] + "%", cy: y.center[1] + "%" })
+						);
+					} else {
+						return React.createElement(
+							"g",
+							null,
+							y.pts.map(function (x) {
+								if (x.Action = "Shot Missed") {
+									return React.createElement("circle", { r: "1.5", fill: "red", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+								} else if (x.Action = "Shot Made") {
+									return React.createElement("circle", { r: "1.5", fill: "green", cx: x.Location[0] + "%", cy: x.Location[1] + "%" });
+								}
+							}),
+							React.createElement("circle", { r: "4%", fill: "none", stroke: "black", cx: y.center[0] + "%", cy: y.center[1] + "%" })
+						);
+					}
 				})
 			);
 		}
