@@ -7395,11 +7395,7 @@ function makeGroup(raw) {
 		let maxSoFar = [];
 		let center = [0, 0];
 
-<<<<<<< HEAD
 		const r = 0.04;
-=======
-		const r = 0.05;
->>>>>>> 8eccb88331c249b21bd8c44f36030add5ce4d466
 		const precision = 0.1;
 		const threshold = 1;
 
