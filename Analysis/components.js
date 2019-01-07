@@ -136,6 +136,13 @@ var HeatMap = function (_React$Component4) {
 
 			var groups = data.groups;
 
+			var totalGroupShots = 0;
+			groups.forEach(function (y) {
+				y.pts.forEach(function (x) {
+					if (x.Action === "Shot Made" || x.Action === "Shot Missed") totalGroupShots += 1;
+				});
+			});
+
 			return React.createElement(
 				"g",
 				null,
@@ -162,10 +169,14 @@ var HeatMap = function (_React$Component4) {
 					if (y.pts.length > 5) {
 						var accuracy = _this5.calculateAccuracy(y.pts);
 						var color = "hsl(" + accuracy + ",100%,50%)";
+						var freq = y.pts.length / totalGroupShots;
+						var circleSize = Math.round(freq * 40) / 10;
+						console.log(circleSize);
 						return React.createElement(
 							"g",
 							null,
-							React.createElement("circle", { r: "4%", fill: color, stroke: "black", cx: y.center[0] + "%", cy: y.center[1] + "%" })
+							React.createElement("circle", { r: circleSize + "%", fill: color, stroke: color, cx: y.center[0] + "%", cy: y.center[1] + "%" }),
+							React.createElement("circle", { r: "4%", fill: "none", stroke: "black", cx: y.center[0] + "%", cy: y.center[1] + "%" })
 						);
 					} else {
 						return React.createElement(

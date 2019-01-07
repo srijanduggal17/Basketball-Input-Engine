@@ -56,6 +56,13 @@ class HeatMap extends React.Component {
 
 		let groups = data.groups;
 
+		let totalGroupShots = 0;
+		groups.forEach(y => {
+			y.pts.forEach(x => {
+				if (x.Action === "Shot Made" || x.Action === "Shot Missed") totalGroupShots += 1;
+			})
+		});
+
 		return (
 			<g>
 				<g>
@@ -80,9 +87,12 @@ class HeatMap extends React.Component {
 					if (y.pts.length > 5) {
 						const accuracy = this.calculateAccuracy(y.pts);
 						const color = `hsl(${accuracy},100%,50%)`;
+						const freq = y.pts.length / totalGroupShots;
+						const circleSize = Math.round(freq*40)/10;
 						return (
 							<g>
-								<circle r="4%" fill={color} stroke="black" cx={`${y.center[0]}%`} cy={`${y.center[1]}%`}></circle>
+								<circle r={`${circleSize}%`} fill={color} stroke={color} cx={`${y.center[0]}%`} cy={`${y.center[1]}%`}></circle>
+								<circle r="4%" fill="none" stroke="black" cx={`${y.center[0]}%`} cy={`${y.center[1]}%`}></circle>
 							</g>
 						)
 					} else {
